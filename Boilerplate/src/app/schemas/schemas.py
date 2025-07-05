@@ -9,20 +9,3 @@ class SecretCreate(BaseModel):
 
     class Config:
         orm_mode = True
-
-class ChatSchema(BaseModel):
-    id: int
-    secret_id: int
-    stored_chats: str
-
-    class Config:
-        orm_mode = True
-
-class incognito(BaseModel):
-    id: int
-    secret_id: int
-    disable: bool = False
-    secret_id: int
-
-    class Config:
-        orm_mode = True

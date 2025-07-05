@@ -4,29 +4,17 @@ from sqlalchemy.orm import relationship
 from ..database import Base
 
 class Secret(Base):
-    __tablename__ = 'secrets'
+    __tablename__ = 't1'
 
     id = Column(Integer, primary_key=True, index=True, nullable=False, autoincrement=True)
     secret = Column(String, index=True, unique=True)
-    key_version = Column(Integer, nullable=True, default=None)  # For key versioning
-
-    # Relationship to Chat
-    chats = relationship("Chat", back_populates="secret", cascade="all, delete-orphan")
+    
+    t2 = relationship("Chat", back_populates="t1", cascade="all, delete-orphan")
 
 class Chat(Base):
-    __tablename__ = 'chats'
+    __tablename__ = 't2'
 
     id = Column(Integer, primary_key=True, index=True, nullable=False, autoincrement=True)
-    secret_id = Column(Integer, ForeignKey("secrets.id"))  # ForeignKey column
-    stored_chats = Column(String, index=True)
-    key_version = Column(Integer, nullable=True, default=None)  # For key versioning
+    secret_id = Column(Integer, ForeignKey("t1.id"))  # ForeignKey column
 
-    secret = relationship("Secret", back_populates="chats")
-
-class Incognito(Base):
-    __tablename__ = 'incognito'
-
-    id = Column(Integer, primary_key=True, index=True, nullable=False, autoincrement=True)
-    secret_id = Column(Integer, ForeignKey("secrets.id"))  # ForeignKey column
-    disable = Column(Boolean, default=False)
-
+    secret = relationship("Secret", back_populates="t2")
