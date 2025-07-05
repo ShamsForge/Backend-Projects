@@ -8,6 +8,7 @@ class Secret(Base):
 
     id = Column(Integer, primary_key=True, index=True, nullable=False, autoincrement=True)
     secret = Column(String, index=True, unique=True)
+    key_version = Column(Integer, nullable=True, default=None)  # For key versioning
 
     # Relationship to Chat
     chats = relationship("Chat", back_populates="secret", cascade="all, delete-orphan")
@@ -18,6 +19,7 @@ class Chat(Base):
     id = Column(Integer, primary_key=True, index=True, nullable=False, autoincrement=True)
     secret_id = Column(Integer, ForeignKey("secrets.id"))  # ForeignKey column
     stored_chats = Column(String, index=True)
+    key_version = Column(Integer, nullable=True, default=None)  # For key versioning
 
     secret = relationship("Secret", back_populates="chats")
 
